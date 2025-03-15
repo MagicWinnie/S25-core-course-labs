@@ -1,13 +1,13 @@
-# Default values for app-go.
+# Default values for app-python.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: magicwinnie/simple-go-web-app
+  repository: magicwinnie/simple-python-web-app
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -29,7 +29,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "internal-app"
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
@@ -56,7 +56,7 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 8080
+  port: 8000
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -107,14 +107,14 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: config-volume
-    configMap:
-      name: app-go-config
+volumes: []
+  # - name: config-volume
+  #   configMap:
+  #     name: app-python-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: app-go-data
+  - name: app-python-data
     mountPath: /app/visits
   # - name: config-volume
   #   mountPath: /config.json
@@ -127,12 +127,12 @@ tolerations: []
 affinity: {}
 
 environment:
-  spongebobAddress: "124 Conch Street"
-  patrickAddress: "120 Conch Street"
-  squidwardAddress: "122 Conch Street"
+  spongebobAddress: "200 Prod Avenue"
+  patrickAddress: "300 Prod Street"
+  squidwardAddress: "400 Prod Blvd"
 
 podManagementPolicy: Parallel
 
 persistence:
-  name: app-go-data
+  name: app-python-data
   size: 1Gi
